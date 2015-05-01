@@ -1,0 +1,26 @@
+In this directory, we make some improvements for the etbr codes.
+
+10/4/2011. We create a new etbr_cmd interface to suit the TAU P/G contest hosted by IBM. Duo Li made the changes with the help of Zao Liu.
+
+Following is the list of changes made by Duo
+
+1. Added a new option "-ec". With this option, etbr_cmd will do error control. By default, no error control.
+
+2.Added a new option "-fast". With this option, etbr_cmd will do etbr with default order 20. By default, mna is used.
+
+3.Revised parser code, so it can handle pulse command now.
+I didn't use your code as I already did the code change before I saw your email.
+
+4.Multi-threading etbr is controlled by "-mt" option. It can return the same result as etbr now.
+
+5.Made the output more neat. For the contest build, please use the last DEBUGFLAGS in the Makefile and do “make”.
+
+6. Also the new codes can read the PULSE commands from the IBM benchmarks.
+
+For this test case, etbr_cmd default completes in 13s; 
+etbr_cmd -fast (default order 20) completes in 11s; 
+etbr_cmd -fast -mt completes in 9s. 
+etbr_cmd -fast can return the comparable results to etbr_cmd. 
+etbr_cmd -fast -nq 30 can get better results but more runtime.
+
+

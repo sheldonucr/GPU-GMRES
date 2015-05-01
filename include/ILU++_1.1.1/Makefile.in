@@ -1,0 +1,120 @@
+# ################################################################################################################################## #
+#                                                                                                                                    #
+#                                                                                                                                    #
+#   Makefile.in for iluplusplus                                                                                                      #
+#                                                                                                                                    #
+#                                                                                                                                    #
+# ################################################################################################################################## #
+
+# select if the library and programs should be compiled for real or complex vectors and matrices
+
+# select USE_COMPLEX = FALSE, if you are using real vectors and matrices
+USE_COMPLEX = FALSE
+
+# select USE_COMPLEX = TRUE, if you are using complex vectors and matrices
+#USE_COMPLEX = TRUE
+
+
+# ##################################################################################################################################
+
+# select external libraries that are available
+
+#USE_PARDISO = TRUE
+USE_PARDISO = FALSE
+
+#USE_METIS   = TRUE
+USE_METIS   = FALSE
+
+#  INFORMATION ON PARDISO:
+#  1) PARDISO is used for the preprocessing. ILU++ calls a PARDISO routine to make an I-matrix.
+#  2) if PARDISO is running on your computer, no further adjustments should be needed.
+
+#  INFORMATION ON METIS:
+#  1) METIS is used for the preprocessing. ILU++ only calls the multilevel nested dissection
+#     routine of METIS.
+#  2) be sure to adjust the path "METISLIBPATH" to the METIS library installed on your computer!
+
+
+# ##################################################################################################################################
+
+
+VERSION         = -1.1
+
+
+# ##################################################################################################################################
+
+# compile options
+
+# tested extensively using linux
+CC = g++
+# seems to work under linux
+#CC = icpc
+# not tested!
+#CC = mpiCC
+
+OPT = -O3
+
+# use as a standard for g++
+#COMPILEOPTIONS  = $(OPT) -Wall --pedantic
+# for debugging. Accessing arrays is checked.
+COMPILEOPTIONS = -g -Wall --pedantic -DDEBUG
+# for icpc
+#COMPILEOPTIONS  = $(OPT) -w1
+
+# ##################################################################################################################################
+
+# options for building libraries
+
+AR = ar rv
+
+# ##################################################################################################################################
+
+# options for linking
+
+# PARDISO uses some f2c, so linking needs to be adjusted.
+USE_FORTRAN = FALSE
+
+
+# determine libraries and definitions needed
+ifeq ($(USE_PARDISO),TRUE)
+    DEFPARDISO      = -DILUPLUSPLUS_USES_PARDISO
+    LIBSPARDISO     = -lpardiso_GNU_IA32 -lgfortran -lm -lc -llapack -lblas
+    USE_FORTRAN     = TRUE
+else
+    DEFPARDISO      =
+    LIBSPARDISO     =
+endif
+
+ifeq ($(USE_METIS),TRUE)
+    DEFMETIS        = -DILUPLUSPLUS_USES_METIS
+    METISLIBPATH    = -L ~/metis-4.0
+    LIBMETIS        = -lmetis
+else
+    DEFMETIS        =
+    METISLIBPATH    =
+    LIBMETIS        =
+endif
+
+ifeq ($(USE_COMPLEX),TRUE)
+    DEFCOMPLEX      = -DILUPLUSPLUS_USES_COMPLEX
+else
+    DEFCOMPLEX      =
+endif
+
+# concatenate
+DEFS            = $(DEFPARDISO) $(DEFMETIS) $(DEFCOMPLEX)
+LIBS            = $(LIBSPARDISO) $(LIBMETIS)
+
+# put together link options
+ifeq ($(USE_FORTRAN),TRUE)
+     LINKOPTIONS     = $(OPT) -Xlinker -defsym -Xlinker MAIN__=main $(METISLIBPATH)     \
+                      -liluplusplus$(VERSION) $(LIBS)
+     LINKOPTIONS_TEM = $(OPT) -Xlinker -defsym -Xlinker MAIN__=main $(METISLIBPATH) $(LIBS)
+else
+     LINKOPTIONS     = $(OPT) $(METISLIBPATH) -liluplusplus$(VERSION) $(LIBS)
+     LINKOPTIONS_TEM = $(OPT) $(METISLIBPATH) $(LIBS)
+endif
+
+
+
+# ##################################################################################################################################
