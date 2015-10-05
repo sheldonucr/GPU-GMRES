@@ -1,4 +1,4 @@
-GMRES version 1.0
+GPU-GMRES version 1.0
 
 Authors:
 
@@ -9,7 +9,7 @@ src_thermal: contains all the source codes for GMRES thermal analysis
 docs: contains a tutorial to show how to use the GMRES
 include: contains several external packages
 
-GMRES requires the following packges:
+GPU-GMRES requires the following packges:
 
 ITPP and ITPPEX(http://itpp.sourceforge.net/4.3.1/index.html)
 UMFPACK, CXSPARSE, UFCONFIG, AMD (http://faculty.cse.tamu.edu/davis/suitesparse.html)
