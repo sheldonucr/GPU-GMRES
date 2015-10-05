@@ -2,7 +2,7 @@ GPU-GMRES version 1.0
 
 Authors:
 
-Duo Li, Xuexin Liu, Kuangya Zhai, Zao Liu, Kai He (khe004@ucr.edu) and Sheldon Tan(stan@ece.ucr.edu)
+Xuexin Liu, Kuangya Zhai, Hai Yu, Zao Liu, Kai He (khe004@ucr.edu) and Sheldon Tan(stan@ece.ucr.edu)
 
 src: contains all the source codes for GMRES power grid analysis
 src_thermal: contains all the source codes for GMRES thermal analysis
@@ -16,3 +16,16 @@ UMFPACK, CXSPARSE, UFCONFIG, AMD (http://faculty.cse.tamu.edu/davis/suitesparse.
 METIS (http://glaros.dtc.umn.edu/gkhome/metis/metis/overview)
 
 Please install these packages and modify the package paths in Makefile
+
+Related publications for the GPU-GMRES solvers
+
+J1.	X. Liu, S. X.-D. Tan, H. Yu, “A GPU-accelerated parallel shooting algorithm for analysis of 
+radio frequency and microwave integrated circuits”, IEEE Transactions on Very Large Scale Integrated Systems 
+(TVLSI), vol. 23, no. 3, March 2015.  http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=6777551 
+
+J2.	X. Liu, K. Zhai, Z. Liu, K. He, S. X.-D. Tan, and W. Yu, “Parallel thermal analysis of 3D integrated circuits 
+with liquid cooling on CPU-GPU platforms”, IEEE Transactions on Very Large Scale Integrated Systems  
+(TVLSI), vol. 23, no. 3, pp. 575-579, March 2015.
+
+ 
+
